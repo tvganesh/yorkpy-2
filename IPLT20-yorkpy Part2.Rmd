@@ -187,64 +187,132 @@ import yorkpy.analytics as yka
 dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
 path=os.path.join(dir1,"Royal Challengers Bangalore-Chennai Super Kings-allMatches.csv")
 rcb_csk_matches = pd.read_csv(path)
-scorecard=teamBattingScorecardOppnAllMatches(rcb_csk_matches,'Royal Challengers Bangalore',"Chennai Super Kings")
+scorecard=yka.teamBattingScorecardOppnAllMatches(rcb_csk_matches,'Royal Challengers Bangalore',"Chennai Super Kings")
 print(scorecard)
 
 
 ```
 
-###11. Wicket vs Runs conceded
+###11.Bowling scorecard
 The plots below provide the wickets taken and the runs conceded by the bowler in the IPL T20 match
 ```{python wicketRuns,cache=TRUE,fig.width=10}
 import pandas as pd
+import os
 import yorkpy.analytics as yka
-dc_dd=pd.read_csv(".\\Deccan Chargers-Delhi Daredevils-2012-05-10.csv")
-yka.teamBowlingWicketMatch(dc_dd,"Deccan Chargers", "Delhi Daredevils",plot=True)
-
-
-print("\n\n")
-rps_rcb=pd.read_csv(".\\Rising Pune Supergiant-Royal Challengers Bangalore-2017-04-29.csv")
-a=yka.teamBowlingWicketMatch(rps_rcb,"Royal Challengers Bangalore", "Rising Pune Supergiant",plot=False)
-print(a)
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Kolkata Knight Riders-Rajasthan Royals-allMatches.csv")
+rcb_csk_matches = pd.read_csv(path)
+scorecard=yka.teamBowlingScorecardOppnAllMatches(rcb_csk_matches,'Rajasthan Royals',"Kolkata Knight Riders")
+print(scorecard)
 ```
 
 
 
 
-###12. Bowler Vs Batsmen
+###12. Bowling wicket kind
 The functions compute and display how the different bowlers of the IPL team performed against the batting opposition.
 
 ```{python bowlerVsBatsmen,cache=TRUE,fig.width=10}
 import pandas as pd
+import os
 import yorkpy.analytics as yka
-csk_kxip=pd.read_csv(".\\Chennai Super Kings-Kings XI Punjab-2014-05-30.csv")
-
-yka.teamBowlersVsBatsmenMatch(csk_kxip,"Chennai Super Kings","Kings XI Punjab")
-print("\n\n")
-
-kkr_rr=pd.read_csv(".\\Kolkata Knight Riders-Rajasthan Royals-2010-04-17.csv")
-m =yka.teamBowlersVsBatsmenMatch(kkr_rr,"Rajasthan Royals","Kolkata Knight Riders",plot=False)
-print(m)
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Chennai Super Kings-Rajasthan Royals-allMatches.csv")
+csk_rr_matches = pd.read_csv(path)
+yka.teamBowlingWicketKindOppositionAllMatches(csk_rr_matches,'Chennai Super Kings','Rajasthan Royals',plot=True,top=5,wickets=1)
 
 
 ```
 
 
-###13. Match worm chart
+###13. Wicket Kind - Dataframe
 The plots below provide the match worm graph for the IPL Twenty 20 matches
 ```{python matchWorm,cache=TRUE,fig.width=10}
 import pandas as pd
+import os
 import yorkpy.analytics as yka
-
-dc_dd=pd.read_csv(".\\Deccan Chargers-Delhi Daredevils-2012-05-10.csv")
-yka.matchWormChart(dc_dd,"Deccan Chargers", "Delhi Daredevils")
-
-
-gl_mi=pd.read_csv(".\\Gujarat Lions-Mumbai Indians-2017-04-29.csv")
-yka.matchWormChart(gl_mi,"Mumbai Indians","Gujarat Lions")
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Delhi Daredevils-Pune Warriors-allMatches.csv")
+dd_pw_matches = pd.read_csv(path)
+m=yka.teamBowlingWicketKindOppositionAllMatches(dd_pw_matches,'Pune Warriors','Delhi Daredevils',plot=False,top=4,wickets=1)
+print(m)
 
 ```
 
+
+
+##14 Bowler vs Batman -Plot
+
+
+
+```{python}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Sunrisers Hyderabad-Kolkata Knight Riders-allMatches.csv")
+srh_kkr_matches = pd.read_csv(path)
+yka.teamBowlersVsBatsmenOppnAllMatches(srh_kkr_matches,'Sunrisers Hyderabad','Kolkata Knight Riders',plot=True,top=5,runsConceded=10)
+```
+
+### 15 Bowler vs Batman -Chart
+```{python}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Royal Challengers Bangalore-Kings XI Punjab-allMatches.csv")
+srh_kkr_matches = pd.read_csv(path)
+m=yka.teamBowlersVsBatsmenOppnAllMatches(srh_kkr_matches,'Royal Challengers Bangalore','Kings XI Punjab',plot=False,top=1,runsConceded=30)
+print(m)
+```
+
+##16 Wins and Losses
+```{python}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Chennai Super Kings-Delhi Daredevils-allMatches.csv")
+csk_dd_matches = pd.read_csv(path)
+yka.plotWinLossBetweenTeams(csk_dd_matches,'Chennai Super Kings','Delhi Daredevils')
+
+```
+
+```{python}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Chennai Super Kings-Delhi Daredevils-allMatches.csv")
+csk_dd_matches = pd.read_csv(path)
+yka.plotWinsByRunOrWickets(csk_dd_matches,'Chennai Super Kings')
+
+```
+
+
+```{python}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Rajasthan Royals-Kings XI Punjab-allMatches.csv")
+rr_kxip_matches = pd.read_csv(path)
+yka.plotWinsbyTossDecision(rr_kxip_matches,'Rajasthan Royals',tossDecision='field')
+
+```
+
+
+```{python}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Rajasthan Royals-Kings XI Punjab-allMatches.csv")
+rr_kxip_matches = pd.read_csv(path)
+yka.plotWinsbyTossDecision(rr_kxip_matches,'Rajasthan Royals',tossDecision='bat')
+
+```
 Feel free to  clone/download the code from  Github [yorkpy](https://github.com/tvganesh/yorkpy)
 
 ##Conclusion
