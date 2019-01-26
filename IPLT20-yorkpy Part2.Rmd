@@ -1,0 +1,269 @@
+---
+title: "Pitching yorkpy ... on the middle and outside off stump to IPL - Part 2"
+author: "Tinniam V Ganesh"
+date: "Dec 27, 2018"
+output:
+  word_document: default
+  html_document: default
+---
+
+
+
+
+##**Introduction**
+
+
+
+You can clone/download the code at Github [yorkpy](https://github.com/tvganesh/yorkpy)
+
+This post has been published to RPubs at [yorkpy-Part1](http://rpubs.com/tvganesh/454443)
+
+You can download this post as PDF at [IPLT20-yorkpy-part1](https://drive.google.com/file/d/167fSf64L_CkmuWHi-uzN1ceENF3AEOEh/view?usp=sharing)
+
+The IPL T20 functions in yorkpy are 
+
+###1. Functions related to team performance in match
+The following function can be used to analyze the IPL team performance in a  T20 match
+
+a. teamBattingScorecardMatch()
+b. teamBatsmenPartnershipMatch()
+c. teamBatsmenVsBowlersMatch()
+d. teamBowlingScorecardMatch()
+e. teamBowlingWicketKindMatch()
+f. teamBowlingWicketRunsMatch()
+g. teamBowlingWicketMatch()
+h. teamBowlersVsBatsmenMatch()
+i. matchWormChart()
+
+###2. Install the package using 'pip install'
+```{python}
+import pandas as pd
+import yorkpy.analytics as yka
+#pip install yorkpy
+```
+
+
+###3. Load a yaml file from Cricsheet
+There are 2  functions that can be to  convert the IPL Twenty20 yaml files to pandas
+dataframeare
+
+a) convertYaml2PandasDataframeT20 
+b) convertAllYaml2PandasDataframesT20
+
+*Note 1: While I have already converted the IPL T20 files, you will need to use these functions for future IPL matches*
+
+###4. Convert and save IPL T20 yaml file to pandas dataframe
+This function will convert a IPL T20 IPL yaml file, in the format as specified in [Cricsheet](http://cricsheet.org/format/) to pandas dataframe. This will be saved as
+as CSV file in the target directory. The name of the file wil  have the following format team1-team2-date.csv. The IPL T20 zip file can be downloaded from [IPL Premier League Matches](https://cricsheet.org/). An example of how a yaml file can be converted to a dataframe and saved is  shown below.
+```{python}
+import pandas as pd
+import yorkpy.analytics as yka
+#convertYaml2PandasDataframe(".\\1082593.yaml","..\ipl", ..\\data")
+```
+
+
+
+###5. Convert and save all IPL T20 yaml files to dataframes
+This function will convert all IPL T20 yaml files from a source directory to dataframes, and save it in the target directory, with the names as mentioned above. Since I have already done this, I will not be executing this again. You can download the zip of all the converted RData files from Github at [yorkpyData](https://github.com/tvganesh/yorkpyData)
+```{python}
+import pandas as pd
+import yorkpy.analytics as yka
+#convertAllYaml2PandasDataframes("..\\ipl", "..\\data")
+
+```
+
+
+You can download the the zip of the files and use it directly in the functions as follows.For the analysis below I chosen a set of random IPL matches
+
+The randomly selected IPL T20 matches are
+
+* Chennai Super Kings vs Kings Xi Punjab, 2014-05-30
+* Deccan Chargers vs Delhi Daredevils, 2012-05-10
+* Gujarat Lions vs Mumbai Indians, 2017-04-29
+* Kolkata Knight Riders vs Rajasthan Royals, 2010-04-17
+* Rising Pune Supergiants vs Royal Challengers Bangalore, 2017-04-29
+
+
+###6. Team batting scorecard
+The function below computes the batting score card of a team in an IPL match. The scorecard gives the balls faced, the runs scored, 4s, 6s and strike rate. The example below is based on the CSK KXIP match on 30 May 2014.
+
+You can check against the actual scores in this match [Chennai Super Kings-Kings XI Punjab-2014-05-30](https://www.google.com/search?q=Chennai+Super+Kings-Kings+XI+Punjab-2014-05-30&oq=Chennai+Super+Kings-Kings+XI+Punjab-2014-05-30&aqs=chrome..69i57.740j0j9&sourceid=chrome&ie=UTF-8#sie=m;/g/11f54j05vm;5;/m/03b_lm1;tb1;fp;1;;)
+
+
+## Print summary
+```{python}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Chennai Super Kings-Delhi Daredevils-allMatches.csv")
+csk_dd_matches = pd.read_csv(path)
+m=yka.teamBatsmenPartnershiOppnAllMatches(csk_dd_matches,'Delhi Daredevils',report="summary")
+print(m)
+
+
+```
+## 2 Print detailed
+
+```{python}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Deccan Chargers-Mumbai Indians-allMatches.csv")
+dc_mi_matches = pd.read_csv(path)
+theTeam='Deccan Chargers'
+m=yka.teamBatsmenPartnershiOppnAllMatches(dc_mi_matches,theTeam,report="detailed", top=4)
+print(m)
+```
+
+## 3 Plot partnership chart
+**Note**: Many of the plots include an additional parameters plot which is either True or False. The default value is plot=True. When plot=True the plot will be displayed. When plot=False the data frame will be returned to the user. The user can use this to create an interactive chart using one of the packages like rcharts, ggvis,googleVis or plotly. 
+
+```{python}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Gujarat Lions-Kings XI Punjab-allMatches.csv")
+gl_kxip_matches = pd.read_csv(path)
+yka.teamBatsmenPartnershipOppnAllMatchesChart(gl_kxip_matches,'Kings XI Punjab','Gujarat Lions', plot=True, top=4, partnershipRuns=20)
+```
+
+
+###7.  Plot the team batting partnerships as chart
+
+
+
+
+```{python batsmenPartnership,cache=TRUE,fig.width=10}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Kolkata Knight Riders-Rising Pune Supergiants-allMatches.csv")
+kkr_rps_matches = pd.read_csv(path)
+m=yka.teamBatsmenPartnershipOppnAllMatchesChart(kkr_rps_matches,'Rising Pune Supergiants','Kolkata Knight Riders', plot=False, top=5, partnershipRuns=20)
+print(m)
+
+```
+
+###8. Batsmen vs Bowler - Plot
+The function below computes and plots the performances of the batsmen vs the bowlers. As before the plot parameter can be set to True or False. By default it is plot=True
+```{python batsmenVsBowler,cache=TRUE,fig.width=10}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Rajasthan Royals-Royal Challengers Bangalore-allMatches.csv")
+rr_rcb_matches = pd.read_csv(path)
+yka.teamBatsmenVsBowlersOppnAllMatches(rr_rcb_matches,'Rajasthan Royals',"Royal Challengers Bangalore",plot=True,top=3,runsScored=20)
+
+
+
+```
+
+###9 BatsmenVsBowlersOppnAllMatches
+This function provides the bowling performance, the number of overs bowled,
+maidens, runs conceded. wickets taken and economy rate for  the IPL match
+```{python}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Mumbai Indians-Delhi Daredevils-allMatches.csv")
+mi_dd_matches = pd.read_csv(path)
+m=yka.teamBatsmenVsBowlersOppnAllMatches(mi_dd_matches,'Delhi Daredevils',"Mumbai Indians",plot=False,top=2,runsScored=50)
+print(m)
+
+```
+
+###10. Batting scorecard
+The plots below provide the kind of wicket taken by the bowler (caught, bowled, lbw etc.) for the IPL match
+```{python bowlingWicketKind,cache=TRUE,fig.width=10}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
+path=os.path.join(dir1,"Royal Challengers Bangalore-Chennai Super Kings-allMatches.csv")
+rcb_csk_matches = pd.read_csv(path)
+scorecard=teamBattingScorecardOppnAllMatches(rcb_csk_matches,'Royal Challengers Bangalore',"Chennai Super Kings")
+print(scorecard)
+
+
+```
+
+###11. Wicket vs Runs conceded
+The plots below provide the wickets taken and the runs conceded by the bowler in the IPL T20 match
+```{python wicketRuns,cache=TRUE,fig.width=10}
+import pandas as pd
+import yorkpy.analytics as yka
+dc_dd=pd.read_csv(".\\Deccan Chargers-Delhi Daredevils-2012-05-10.csv")
+yka.teamBowlingWicketMatch(dc_dd,"Deccan Chargers", "Delhi Daredevils",plot=True)
+
+
+print("\n\n")
+rps_rcb=pd.read_csv(".\\Rising Pune Supergiant-Royal Challengers Bangalore-2017-04-29.csv")
+a=yka.teamBowlingWicketMatch(rps_rcb,"Royal Challengers Bangalore", "Rising Pune Supergiant",plot=False)
+print(a)
+```
+
+
+
+
+###12. Bowler Vs Batsmen
+The functions compute and display how the different bowlers of the IPL team performed against the batting opposition.
+
+```{python bowlerVsBatsmen,cache=TRUE,fig.width=10}
+import pandas as pd
+import yorkpy.analytics as yka
+csk_kxip=pd.read_csv(".\\Chennai Super Kings-Kings XI Punjab-2014-05-30.csv")
+
+yka.teamBowlersVsBatsmenMatch(csk_kxip,"Chennai Super Kings","Kings XI Punjab")
+print("\n\n")
+
+kkr_rr=pd.read_csv(".\\Kolkata Knight Riders-Rajasthan Royals-2010-04-17.csv")
+m =yka.teamBowlersVsBatsmenMatch(kkr_rr,"Rajasthan Royals","Kolkata Knight Riders",plot=False)
+print(m)
+
+
+```
+
+
+###13. Match worm chart
+The plots below provide the match worm graph for the IPL Twenty 20 matches
+```{python matchWorm,cache=TRUE,fig.width=10}
+import pandas as pd
+import yorkpy.analytics as yka
+
+dc_dd=pd.read_csv(".\\Deccan Chargers-Delhi Daredevils-2012-05-10.csv")
+yka.matchWormChart(dc_dd,"Deccan Chargers", "Delhi Daredevils")
+
+
+gl_mi=pd.read_csv(".\\Gujarat Lions-Mumbai Indians-2017-04-29.csv")
+yka.matchWormChart(gl_mi,"Mumbai Indians","Gujarat Lions")
+
+```
+
+Feel free to  clone/download the code from  Github [yorkpy](https://github.com/tvganesh/yorkpy)
+
+##Conclusion
+This post included all functions between 2 IPL teams from the package yorkpy for IPL Twenty20 matches.As mentioned above the yaml match files have been already converted to dataframes and are available for download from Github at [yorkpyData](https://github.com/tvganesh/yorkpyData)
+
+
+After having used Python and R for analytics, Machine Learning and Deep Learning, I have now realized that neither language is superior or inferior. Both have, some good packages and some that are not so well suited.  
+
+
+**To be continued. Watch this space!**
+
+You may also like 
+
+1. [My book 'Deep Learning from first principles:Second Edition' now on Amazon](https://gigadom.in/2018/12/14/my-book-deep-learning-from-first-principlessecond-edition-now-on-amazon/)
+2.[My book 'Practical Machine Learning in R and Python: Second edition' on Amazon](https://gigadom.in/2018/06/01/my-book-practical-machine-learning-in-r-and-python-second-edition-on-amazon/)
+3. [Cricpy takes a swing at the ODIs](https://gigadom.in/2018/11/11/cricpy-takes-a-swing-at-the-odis/)
+4. [Introducing cricket package yorkr: Part 1- Beaten by sheer pace!](https://gigadom.in/2016/04/02/introducing-cricket-package-yorkr-part-1-beaten-by-sheer-pace/)
+5. [Big Data-1: Move into the big league:Graduate from Python to Pyspark](https://gigadom.in/2018/10/08/big-data-1-move-into-the-big-leaguegraduate-from-python-to-pyspark/)
+6. [Simulating an Edge Shape in Android](https://gigadom.in/2013/06/07/simulating-an-edge-shape-in-android/)
+
+To see all posts click [Index of posts](https://gigadom.in/aa-2/)
+
