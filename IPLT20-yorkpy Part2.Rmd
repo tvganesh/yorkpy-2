@@ -3,8 +3,8 @@ title: "Pitching yorkpy ... on the middle and outside off stump to IPL - Part 2"
 author: "Tinniam V Ganesh"
 date: "Dec 27, 2018"
 output:
-  word_document: default
   html_document: default
+  word_document: default
 ---
 
 
@@ -12,6 +12,7 @@ output:
 
 ##**Introduction**
 
+This post is a follow-up to my previous post, [Pitching yorkpy...short of good length to IPL-Part 1](https://gigadom.in/2018/12/28/pitching-yorkpy-short-of-good-length-to-ipl-part-1/), in which I analyzed individual IPL matches. In this 2nd post I analyze the data in all matches between any 2 IPL teams, say CSK-RCB, MI-KKR or DD-RPS and so on. As I have already mentioned **yorky** is the python clone of my R packkage **yorkr** and this post is almost a mirror image of my post with yorkr namely [yorkr crashes the IPL party! - Part 2](https://gigadom.in/2016/04/20/yorkr-crashes-the-ipl-party-part-2/). The signatures of yorkpy and yorkr are identical and will work in amost the same way.
 
 
 You can clone/download the code at Github [yorkpy](https://github.com/tvganesh/yorkpy)
@@ -22,75 +23,52 @@ You can download this post as PDF at [IPLT20-yorkpy-part1](https://drive.google.
 
 The IPL T20 functions in yorkpy are 
 
-###1. Functions related to team performance in match
+###1. Functions related to head-to-head confrontations between any 2 IPL teams
 The following function can be used to analyze the IPL team performance in a  T20 match
 
-a. teamBattingScorecardMatch()
-b. teamBatsmenPartnershipMatch()
-c. teamBatsmenVsBowlersMatch()
-d. teamBowlingScorecardMatch()
-e. teamBowlingWicketKindMatch()
-f. teamBowlingWicketRunsMatch()
-g. teamBowlingWicketMatch()
-h. teamBowlersVsBatsmenMatch()
-i. matchWormChart()
+a. getAllMatchesBetweenTeams()
+b. saveAllMatchesBetween2IPLTeams()
+c. teamBatsmenPartnershiOppnAllMatches()
+d. teamBatsmenPartnershipOppnAllMatchesChart()
+e. teamBatsmenVsBowlersOppnAllMatches()
+f. teamBattingScorecardOppnAllMatches()
+g. teamBowlingScorecardOppnAllMatches()
+h. teamBowlingWicketKindOppositionAllMatches()
+i. teamBowlersVsBatsmenOppnAllMatches()
+j. plotWinLossBetweenTeams()
+k. plotWinsByRunOrWickets()
+l. plotWinsbyTossDecision()
 
-###2. Install the package using 'pip install'
+All functions relate to the performance of an IPL team in all matches against an opposing IPL team
+
+## 2. Get data for all T20 matches between 2 teams
+We can get all IPL T20 matches between any 2 teams using the function below. The dir parameter should point to the folder which has the IPL T20  csv files of the individual matches (see [Pitching yorkpy...short of good length to IPL-Part 1](https://gigadom.in/2018/12/28/pitching-yorkpy-short-of-good-length-to-ipl-part-1/)). This function creates a data frame of all the IPL T20 matches and and also saves the dataframe as CSV file if save=True. If save=False the dataframe is just returned and not saved.
 ```{python}
 import pandas as pd
+import os
 import yorkpy.analytics as yka
-#pip install yorkpy
+#dir1= "C:\\software\\cricket-package\\yorkpyPkg\\yorkpyData\\IPLConverted"
+#yka.getAllMatchesBetweenTeams("Kolkata Knight Riders","Delhi Daredevils",dir=dir1,save=True)
+```
+
+###3. Save data for all matches between all combination of 2 teams
+This can be done locally using the function below. You could use this function to combine all IPL Twenty20 matches between any 2 IPL teams into a single dataframe and save it in the current folder. All the dataframes for all combinations have already been done and are available as CSV files in Github
+
+```{python}
+import pandas as pd
+import os
+import yorkpy.analytics as yka
+#dir1= "C:\\software\\cricket-package\\yorkpyPkg\\yorkpyData\\IPLConverted"
+#yka.saveAllMatchesBetween2IPLTeams(dir1)
 ```
 
 
-###3. Load a yaml file from Cricsheet
-There are 2  functions that can be to  convert the IPL Twenty20 yaml files to pandas
-dataframeare
+**Note:** In the functions below, I have randomly chosen any 2 IPL teams and analyze how the teams have performed against each other in different areas. You are free to choose any 2 cpmbination of IPL teams for your analysis
 
-a) convertYaml2PandasDataframeT20 
-b) convertAllYaml2PandasDataframesT20
-
-*Note 1: While I have already converted the IPL T20 files, you will need to use these functions for future IPL matches*
-
-###4. Convert and save IPL T20 yaml file to pandas dataframe
-This function will convert a IPL T20 IPL yaml file, in the format as specified in [Cricsheet](http://cricsheet.org/format/) to pandas dataframe. This will be saved as
-as CSV file in the target directory. The name of the file wil  have the following format team1-team2-date.csv. The IPL T20 zip file can be downloaded from [IPL Premier League Matches](https://cricsheet.org/). An example of how a yaml file can be converted to a dataframe and saved is  shown below.
-```{python}
-import pandas as pd
-import yorkpy.analytics as yka
-#convertYaml2PandasDataframe(".\\1082593.yaml","..\ipl", ..\\data")
-```
+###4.Team Batsmen partnership in Twenty20 (all matches with opposing IPL team - summary)
+The function below computes the highest partnerships between the 2 IPL teams Chennai Superkings and Delhi Daredevils. Any other 2 IPL team could have also been chosen. The summary gives the top 3 batsmen for Delhi Daredevils namely Sehwag, Gambhir and Dinesh Karthik when the report='summary'
 
 
-
-###5. Convert and save all IPL T20 yaml files to dataframes
-This function will convert all IPL T20 yaml files from a source directory to dataframes, and save it in the target directory, with the names as mentioned above. Since I have already done this, I will not be executing this again. You can download the zip of all the converted RData files from Github at [yorkpyData](https://github.com/tvganesh/yorkpyData)
-```{python}
-import pandas as pd
-import yorkpy.analytics as yka
-#convertAllYaml2PandasDataframes("..\\ipl", "..\\data")
-
-```
-
-
-You can download the the zip of the files and use it directly in the functions as follows.For the analysis below I chosen a set of random IPL matches
-
-The randomly selected IPL T20 matches are
-
-* Chennai Super Kings vs Kings Xi Punjab, 2014-05-30
-* Deccan Chargers vs Delhi Daredevils, 2012-05-10
-* Gujarat Lions vs Mumbai Indians, 2017-04-29
-* Kolkata Knight Riders vs Rajasthan Royals, 2010-04-17
-* Rising Pune Supergiants vs Royal Challengers Bangalore, 2017-04-29
-
-
-###6. Team batting scorecard
-The function below computes the batting score card of a team in an IPL match. The scorecard gives the balls faced, the runs scored, 4s, 6s and strike rate. The example below is based on the CSK KXIP match on 30 May 2014.
-
-You can check against the actual scores in this match [Chennai Super Kings-Kings XI Punjab-2014-05-30](https://www.google.com/search?q=Chennai+Super+Kings-Kings+XI+Punjab-2014-05-30&oq=Chennai+Super+Kings-Kings+XI+Punjab-2014-05-30&aqs=chrome..69i57.740j0j9&sourceid=chrome&ie=UTF-8#sie=m;/g/11f54j05vm;5;/m/03b_lm1;tb1;fp;1;;)
-
-
-## Print summary
 ```{python}
 import pandas as pd
 import os
@@ -103,7 +81,8 @@ print(m)
 
 
 ```
-## 2 Print detailed
+##5. Team Batsmen partnership in Twenty20 (all matches with opposing IPL team -detailed)
+The function below gives the detailed breakup of partnerships between Deccan Chargers and Mumbai Indians for Deccan Chargers.
 
 ```{python}
 import pandas as pd
@@ -117,10 +96,10 @@ m=yka.teamBatsmenPartnershiOppnAllMatches(dc_mi_matches,theTeam,report="detailed
 print(m)
 ```
 
-## 3 Plot partnership chart
-**Note**: Many of the plots include an additional parameters plot which is either True or False. The default value is plot=True. When plot=True the plot will be displayed. When plot=False the data frame will be returned to the user. The user can use this to create an interactive chart using one of the packages like rcharts, ggvis,googleVis or plotly. 
+##6. Team Batsmen partnership in Twenty20 - Chart (all matches with opposing IPL team)
+The function below plots the partnerships in all matches between 2 IPL teams and plots as chart
 
-```{python}
+```{python partnership,cache=TRUE,fig.width=10}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -131,12 +110,14 @@ yka.teamBatsmenPartnershipOppnAllMatchesChart(gl_kxip_matches,'Kings XI Punjab',
 ```
 
 
-###7.  Plot the team batting partnerships as chart
+##7.Team Batsmen partnership in Twenty20 - Dataframe (all matches with opposing IPL team)
 
+This function does not plot the data but returns the dataframe to the user to plot
+or manipulate.
 
+**Note**: Many of the plots include an additional parameters for e.g. plot which is either True or False. The default value is plot=True. When plot=True the plot will be displayed. When plot=False the data frame will be returned to the user. The user can use this to create an interactive charts. The parameter top= specifies the number of top batsmen that need to be included in the chart, and partnershipRuns gives the minimum cutoff runs in partnwerships to be considered
 
-
-```{python batsmenPartnership,cache=TRUE,fig.width=10}
+```{python }
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -148,8 +129,8 @@ print(m)
 
 ```
 
-###8. Batsmen vs Bowler - Plot
-The function below computes and plots the performances of the batsmen vs the bowlers. As before the plot parameter can be set to True or False. By default it is plot=True
+##8.  Team batsmen versus bowler in Twenty20-Chart (all matches with opposing IPL team)
+The plots below provide information on how each of the top batsmen of the IPL teams fared against the opposition bowlers
 ```{python batsmenVsBowler,cache=TRUE,fig.width=10}
 import pandas as pd
 import os
@@ -159,11 +140,9 @@ path=os.path.join(dir1,"Rajasthan Royals-Royal Challengers Bangalore-allMatches.
 rr_rcb_matches = pd.read_csv(path)
 yka.teamBatsmenVsBowlersOppnAllMatches(rr_rcb_matches,'Rajasthan Royals',"Royal Challengers Bangalore",plot=True,top=3,runsScored=20)
 
-
-
 ```
 
-###9 BatsmenVsBowlersOppnAllMatches
+##9 Team batsmen versus bowler in Twenty20-Dataframe (all matches with opposing IPL team)
 This function provides the bowling performance, the number of overs bowled,
 maidens, runs conceded. wickets taken and economy rate for  the IPL match
 ```{python}
@@ -178,9 +157,9 @@ print(m)
 
 ```
 
-###10. Batting scorecard
-The plots below provide the kind of wicket taken by the bowler (caught, bowled, lbw etc.) for the IPL match
-```{python bowlingWicketKind,cache=TRUE,fig.width=10}
+##10. Team batting scorecard(all matches with opposing IPL team)
+This function provides the overall scorecard for an IPL team in all matches against another IPL team. In the snippet below the batting scorecard of RCB is show against CSK. Kohli, Gayle and De villiers lead the pack.
+```{python }
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -193,9 +172,9 @@ print(scorecard)
 
 ```
 
-###11.Bowling scorecard
-The plots below provide the wickets taken and the runs conceded by the bowler in the IPL T20 match
-```{python wicketRuns,cache=TRUE,fig.width=10}
+##11.Team Bowling scorecard (all matches with opposing IPL team)
+The output below gives the performance of Rajasthan Royals bowlers against Kolkata Knight Riders in all matches between the 2 IPL teams.
+```{python}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -206,13 +185,10 @@ scorecard=yka.teamBowlingScorecardOppnAllMatches(rcb_csk_matches,'Rajasthan Roya
 print(scorecard)
 ```
 
+###12. Team Bowling wicket kind -Chart (all matches with opposing IPL team)
+The functions compute and display the kind of wickets taken(bowled, caught, lbw etc) by an IPL team in all matches against another IPL team
 
-
-
-###12. Bowling wicket kind
-The functions compute and display how the different bowlers of the IPL team performed against the batting opposition.
-
-```{python bowlerVsBatsmen,cache=TRUE,fig.width=10}
+```{python bowlerWicketKind,cache=TRUE,fig.width=10}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -225,9 +201,9 @@ yka.teamBowlingWicketKindOppositionAllMatches(csk_rr_matches,'Chennai Super King
 ```
 
 
-###13. Wicket Kind - Dataframe
-The plots below provide the match worm graph for the IPL Twenty 20 matches
-```{python matchWorm,cache=TRUE,fig.width=10}
+###13. Team Bowling wicket kind -Dataframe (all matches with opposing IPL team)
+This gives the type of wickets taken
+```{python }
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -241,11 +217,10 @@ print(m)
 
 
 
-##14 Bowler vs Batman -Plot
-
-
-
-```{python}
+##14 Team Bowler vs Batman -Plot (all matches with opposing IPL team)
+The function below gives the performance of bowlers in all matches against another
+IPL team.
+```{python bowlerVsBatsmen,cache=TRUE,fig.width=10}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -255,7 +230,7 @@ srh_kkr_matches = pd.read_csv(path)
 yka.teamBowlersVsBatsmenOppnAllMatches(srh_kkr_matches,'Sunrisers Hyderabad','Kolkata Knight Riders',plot=True,top=5,runsConceded=10)
 ```
 
-### 15 Bowler vs Batman -Chart
+## 15 Team Bowler vs Batman - Dataframe (all matches with opposing IPL team)
 ```{python}
 import pandas as pd
 import os
@@ -267,8 +242,10 @@ m=yka.teamBowlersVsBatsmenOppnAllMatches(srh_kkr_matches,'Royal Challengers Bang
 print(m)
 ```
 
-##16 Wins and Losses
-```{python}
+##16 Team Wins and Losses (all matches with opposing IPL team)
+The function below computes and plot the number of wins and losses in a head-on
+confrontation between 2 IPL teams
+```{python winsLosses, cache=True, fig.width=10}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -279,7 +256,9 @@ yka.plotWinLossBetweenTeams(csk_dd_matches,'Chennai Super Kings','Delhi Daredevi
 
 ```
 
-```{python}
+##17 Team Wins by win type (all matches with opposing IPL team)
+This function shows how the win happened whether by runs or by wickets
+```{python winsType,cache=True, fig.width=10}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -290,8 +269,9 @@ yka.plotWinsByRunOrWickets(csk_dd_matches,'Chennai Super Kings')
 
 ```
 
-
-```{python}
+##18 Team Wins by toss decision (all matches with opposing IPL team)
+This show how Rajasthan Royals fared when it chose to field on winning the toss
+```{python winToss,cache=True, fig.width=10}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -302,15 +282,16 @@ yka.plotWinsbyTossDecision(rr_kxip_matches,'Rajasthan Royals',tossDecision='fiel
 
 ```
 
-
-```{python}
+##18 Team Wins by toss decision (all matches with opposing IPL team)
+This plot shows how Mumbai Indians fared when it chose to bat on winning the toss
+```{python winToss1,cache=True, fig.width=10}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
 dir1= "C:\\software\\cricket-package\\yorkpyIPLData\\data1"
-path=os.path.join(dir1,"Rajasthan Royals-Kings XI Punjab-allMatches.csv")
-rr_kxip_matches = pd.read_csv(path)
-yka.plotWinsbyTossDecision(rr_kxip_matches,'Rajasthan Royals',tossDecision='bat')
+path=os.path.join(dir1,"Mumbai Indians-Royal Challengers Bangalore-allMatches.csv")
+mi_rcb_matches = pd.read_csv(path)
+yka.plotWinsbyTossDecision(mi_rcb_matches,'Mumbai Indians',tossDecision='bat')
 
 ```
 Feel free to  clone/download the code from  Github [yorkpy](https://github.com/tvganesh/yorkpy)
