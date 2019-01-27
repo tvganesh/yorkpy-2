@@ -245,7 +245,7 @@ print(m)
 ##16 Team Wins and Losses (all matches with opposing IPL team)
 The function below computes and plot the number of wins and losses in a head-on
 confrontation between 2 IPL teams
-```{python winsLosses, cache=True, fig.width=10}
+```{python winsLosses, cache=TRUE, fig.width=10}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -258,7 +258,7 @@ yka.plotWinLossBetweenTeams(csk_dd_matches,'Chennai Super Kings','Delhi Daredevi
 
 ##17 Team Wins by win type (all matches with opposing IPL team)
 This function shows how the win happened whether by runs or by wickets
-```{python winsType,cache=True, fig.width=10}
+```{python winsType,cache=TRUE, fig.width=10}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -271,7 +271,7 @@ yka.plotWinsByRunOrWickets(csk_dd_matches,'Chennai Super Kings')
 
 ##18 Team Wins by toss decision (all matches with opposing IPL team)
 This show how Rajasthan Royals fared when it chose to field on winning the toss
-```{python winToss,cache=True, fig.width=10}
+```{python winToss,cache=TRUE, fig.width=10}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
@@ -284,7 +284,7 @@ yka.plotWinsbyTossDecision(rr_kxip_matches,'Rajasthan Royals',tossDecision='fiel
 
 ##18 Team Wins by toss decision (all matches with opposing IPL team)
 This plot shows how Mumbai Indians fared when it chose to bat on winning the toss
-```{python winToss1,cache=True, fig.width=10}
+```{python winToss1,cache=TRUE, fig.width=10}
 import pandas as pd
 import os
 import yorkpy.analytics as yka
